@@ -489,6 +489,136 @@
     line-height: 1.6;
   }
 </style>
+<!-- 
+  CHARTREUSE EXPLOSIVES — SCHEMA JSON-LD
+  Place this block in the <head> of chartreuseexplosives.com/index.html
+  before the closing </head> tag.
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://chartreuseexplosives.com/#prince-campbell",
+      "name": "Prince Campbell III",
+      "alternateName": "Chartreuse",
+      "jobTitle": "Founder & CEO",
+      "worksFor": {
+        "@id": "https://chartreuseexplosives.com/#organization"
+      },
+      "url": "https://chartreuseexplosives.com/",
+      "image": "https://chartreuseexplosives.com/logo.png",
+      "sameAs": [
+        "https://www.linkedin.com/in/chartreuse",
+        "https://twitter.com/chartreuseb",
+        "https://www.amazon.com/stores/Prince-Campbell/author/B006BGQ6OG",
+        "https://muckrack.com/prince-campbell",
+        "https://www.crunchbase.com/person/prince-campbell",
+        "https://chartreuse.wordpress.com/"
+      ],
+      "knowsAbout": [
+        "Cultural Analysis",
+        "Media Criticism",
+        "Consequence Intelligence",
+        "Dispute Resolution",
+        "Publishing",
+        "Internet Media"
+      ],
+      "description": "Prince Campbell III is a New York-based entrepreneur, author, and media analyst. Founder & CEO of Chartreuse Explosives, a multi-vertical brand operating Chartreuse Resolutions (dispute resolution consulting), BlackSignals (consequence intelligence publishing), and a book publishing catalog. Covered by The New York Times in 2006 for predicting streaming would displace broadcast television.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "New York",
+        "addressRegion": "NY",
+        "addressCountry": "US"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://chartreuseexplosives.com/"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://chartreuseexplosives.com/#organization",
+      "name": "Chartreuse Explosives",
+      "url": "https://chartreuseexplosives.com/",
+      "logo": "https://chartreuseexplosives.com/logo.png",
+      "foundingDate": "2025-10",
+      "founder": {
+        "@id": "https://chartreuseexplosives.com/#prince-campbell"
+      },
+      "description": "Chartreuse Explosives is a New York-based multi-vertical brand operating in dispute resolution consulting, consequence intelligence publishing, and book publishing. Properties include Chartreuse Resolutions, BlackSignals, and a catalog of published titles on Amazon.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "New York",
+        "addressRegion": "NY",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://www.crunchbase.com/organization/chartreuse-explosives",
+        "https://twitter.com/chartreuse_xplo",
+        "https://www.linkedin.com/in/chartreuse"
+      ],
+      "subOrganization": [
+        {
+          "@type": "Organization",
+          "name": "Chartreuse Resolutions",
+          "url": "https://resolutions.chartreuseexplosives.com/",
+          "description": "Nationwide flat-fee dispute resolution consulting handling landlord-tenant disputes, contractor conflicts, and roommate standoffs."
+        },
+        {
+          "@type": "Organization",
+          "name": "BlackSignals",
+          "url": "https://blacksignals.org/",
+          "description": "Consequence intelligence publishing platform tracking verifiable patterns and shifts framed around impact on Black American economic mobility, institutional access, and political leverage."
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Chartreuse Explosives Services & Products",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Dispute Resolution Consulting",
+              "url": "https://resolutions.chartreuseexplosives.com/",
+              "description": "Flat-fee dispute resolution for landlord-tenant, contractor, and roommate conflicts. Nationwide.",
+              "provider": {
+                "@id": "https://chartreuseexplosives.com/#organization"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "BlackSignals Consequence Intelligence",
+              "url": "https://blacksignals.org/",
+              "description": "Tiered consequence analysis of decisions, policies, and events impacting Black American economic mobility."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://chartreuseexplosives.com/#website",
+      "url": "https://chartreuseexplosives.com/",
+      "name": "Chartreuse Explosives",
+      "publisher": {
+        "@id": "https://chartreuseexplosives.com/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://chartreuseexplosives.com/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
