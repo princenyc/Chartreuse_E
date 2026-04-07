@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chartreuse Explosives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Franklin:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #d0002a;
+    --chartreuse: #94b23c;
+    --chartreuse-dark: #4a6431;
+    --bottle-cap: #2a1f1a;
+    --deep-wine: #1c0c0f;
+    --off-white: #fff6ee;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep-wine);
+    color: var(--off-white);
+    font-family: 'Libre Franklin', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid rgba(148,178,60,0.2);
+    position: sticky;
+    top: 0;
+    background: rgba(28,12,15,0.97);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'Anton', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    color: var(--chartreuse);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .nav-links a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--off-white);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--chartreuse); }
+
+  @media (min-width: 768px) {
+    nav { padding: 1.2rem 2.5rem; }
+    .nav-logo { font-size: 1.1rem; }
+    .nav-links { gap: 2rem; }
+    .nav-links a { font-size: 0.72rem; }
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 1.2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Mobile: logo sits above the text block */
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-logo {
+    width: min(220px, 55vw);
+    height: auto;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.1s;
+    filter: drop-shadow(0 8px 32px rgba(208,0,42,0.45));
+    align-self: flex-start;
+  }
+
+  .hero-text { flex: 1; }
+
+  .hero-eyebrow {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--chartreuse);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.3s;
+  }
+
+  .hero-headline {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(3rem, 13vw, 9rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+    color: var(--off-white);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.45s;
+  }
+
+  .hero-headline span { color: var(--red); }
+
+  .hero-sub {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(1.1rem, 4vw, 1.8rem);
+    font-weight: 400;
+    color: var(--chartreuse);
+    opacity: 0;
+    margin-top: 1.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+  }
+
+  .hero-rule {
+    width: 50px;
+    height: 3px;
+    background: var(--chartreuse);
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.8s;
+  }
+
+  /* Desktop: side-by-side, logo right */
+  @media (min-width: 768px) {
+    .hero {
+      min-height: 88vh;
+      padding: 5rem 2.5rem 4rem;
+    }
+
+    .hero-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hero-logo {
+      width: min(340px, 35vw);
+      order: 2;
+      align-self: center;
+      flex-shrink: 0;
+    }
+
+    .hero-text { order: 1; }
+    .hero-eyebrow { font-size: 0.72rem; margin-bottom: 1.5rem; }
+    .hero-rule { width: 60px; margin-top: 2.5rem; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── TRUST STRIP ─── */
+  .trust-strip {
+    background: var(--red);
+    padding: 1.2rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    overflow: hidden;
+  }
+
+  .trust-strip-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,246,238,0.6);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .trust-strip-text {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+    text-transform: uppercase;
+    color: var(--off-white);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+
+  .trust-strip-text em {
+    font-style: normal;
+    color: var(--chartreuse);
+  }
+
+  @media (min-width: 768px) {
+    .trust-strip { padding: 1.2rem 2.5rem; }
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 3.5rem 1.2rem;
+  }
+
+  @media (min-width: 768px) {
+    section {
+      padding: 5rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+
+  .section-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--chartreuse);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(148,178,60,0.25);
+  }
+
+  /* ─── FEATURED ─── */
+  .featured {
+    background: var(--bottle-cap);
+    border-left: 4px solid var(--red);
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .featured:hover { border-color: var(--chartreuse); }
+
+  .featured::before {
+    content: 'FEATURED';
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--red);
+  }
+
+  .featured-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--chartreuse);
+    margin-bottom: 0.9rem;
+  }
+
+  .featured-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    text-transform: uppercase;
+    line-height: 0.95;
+    color: var(--off-white);
+    margin-bottom: 1.1rem;
+  }
+
+  .featured-desc {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(255,246,238,0.75);
+  }
+
+  .featured-desc strong { color: var(--off-white); font-weight: 600; }
+
+  @media (min-width: 768px) {
+    .featured { padding: 3.5rem; }
+  }
+
+  .btn {
+    display: inline-block;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.6rem;
+    border: 1px solid var(--chartreuse);
+    color: var(--chartreuse);
+    transition: background 0.2s, color 0.2s;
+    margin-top: 1.8rem;
+  }
+
+  .btn:hover { background: var(--chartreuse); color: var(--deep-wine); }
+
+  /* ─── GRID ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5px;
+    background: rgba(148,178,60,0.1);
+  }
+
+  @media (min-width: 540px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .card {
+    background: var(--deep-wine);
+    padding: 1.8rem;
+    text-decoration: none;
+    display: block;
+    border-top: 2px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .card:hover { border-color: var(--chartreuse); background: var(--bottle-cap); }
+
+  @media (min-width: 768px) { .card { padding: 2.2rem; } }
+
+  .card-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--chartreuse-dark);
+    margin-bottom: 0.9rem;
+  }
+
+  .card-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: var(--off-white);
+    line-height: 1;
+    margin-bottom: 0.7rem;
+  }
+
+  .card-desc {
+    font-size: 0.83rem;
+    line-height: 1.6;
+    color: rgba(255,246,238,0.6);
+  }
+
+  .card-arrow {
+    display: block;
+    margin-top: 1.2rem;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    color: var(--chartreuse);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover .card-arrow { opacity: 1; }
+
+  /* ─── CONSTRUCTION ─── */
+  .construction-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 540px) { .construction-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .construction-card {
+    border: 1px solid rgba(148,178,60,0.15);
+    padding: 1.5rem;
+    opacity: 0.65;
+  }
+
+  .construction-badge {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.7rem;
+  }
+
+  .construction-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: rgba(255,246,238,0.45);
+  }
+
+  .construction-url {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    color: rgba(148,178,60,0.35);
+    margin-top: 0.4rem;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: rgba(148,178,60,0.1);
+    margin: 0 1.2rem;
+  }
+
+  @media (min-width: 768px) { .divider { margin: 0 2.5rem; } }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2rem 1.2rem;
+    border-top: 1px solid rgba(148,178,60,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    footer {
+      padding: 3rem 2.5rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+  }
+
+  .footer-logo {
+    font-family: 'Anton', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: var(--chartreuse);
+    text-transform: uppercase;
+  }
+
+  .footer-doctrine {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,246,238,0.3);
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Chartreuse Explosives</a>
+  <ul class="nav-links">
+    <li><a href="https://resolutions.chartreuseexplosives.com/">Resolutions</a></li>
+    <li><a href="https://blacksignals.org/">BlackSignals</a></li>
+    <li><a href="https://chartreuseexplosives.gumroad.com/">Store</a></li>
+    <li><a href="https://www.amazon.com/author/princecampbell">Books</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Founded 2025 &nbsp;/&nbsp; New York City</p>
+      <h1 class="hero-headline">Chartreuse<br><span>Explosives.</span><br>Dangerous<br>on purpose.</h1>
+      <p class="hero-sub">Harder to ignore.</p>
+      <div class="hero-rule"></div>
+    </div>
+    <img src="logo.png" alt="Chartreuse Explosives" class="hero-logo">
+  </div>
+</div>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip reveal">
+  <span class="trust-strip-label">On record</span>
+  <p class="trust-strip-text">
+    Predicted streaming would displace broadcast TV — <em>covered by The New York Times, 2006.</em>
+  </p>
+</div>
+
+<!-- RESOLUTIONS — FEATURED -->
+<section class="reveal">
+  <p class="section-label">Primary vertical</p>
+  <div class="featured">
+    <p class="featured-tag">Dispute Resolution &nbsp;/&nbsp; Nationwide</p>
+    <h2 class="featured-title">Chartreuse<br>Resolutions</h2>
+    <p class="featured-desc">
+      Contractor left the job unfinished. Landlord won't return your deposit. Roommate won't pay or won't leave.
+      <strong>We've handled it.</strong> Flat-fee consulting. No lawyers. No hourly billing. No surprises.
+      We negotiate, document, and escalate until the problem breaks.
+    </p>
+    <a href="https://resolutions.chartreuseexplosives.com/" class="btn">Get a free screening &rarr;</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VERTICALS GRID -->
+<section class="reveal">
+  <p class="section-label">What we build</p>
+  <div class="grid">
+
+    <a href="https://blacksignals.org/" class="card">
+      <p class="card-tag">Consequence Intelligence</p>
+      <h3 class="card-title">Black Signals</h3>
+      <p class="card-desc">Tiered analysis of decisions, policies, and events — framed around impact on Black American economic mobility, institutional access, and political leverage.</p>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a href="https://www.amazon.com/author/princecampbell" class="card">
+      <p class="card-tag">Publishing</p>
+      <h3 class="card-title">Books</h3>
+      <p class="card-desc">Cultural analysis, media criticism, and frameworks for reading power — written in the Chartreuse voice.</p>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a href="https://chartreuse.wordpress.com/" class="card">
+      <p class="card-tag">Cultural Commentary</p>
+      <h3 class="card-title">The Blog</h3>
+      <p class="card-desc">Internet media network management. Running since 2005. Still going. No algorithm. No advertisers.</p>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a href="https://chartreuseexplosives.gumroad.com/" class="card">
+      <p class="card-tag">Products</p>
+      <h3 class="card-title">Store</h3>
+      <p class="card-desc">PDFs, memos, and intelligence products. Collectible. Archival. Designed to be useful long after the news cycle moves on.</p>
+      <span class="card-arrow">→</span>
+    </a>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- UNDER CONSTRUCTION -->
+<section class="reveal">
+  <p class="section-label">In development</p>
+  <div class="construction-grid">
+    <div class="construction-card">
+      <p class="construction-badge">// Under Construction</p>
+      <h3 class="construction-title">CE New York City</h3>
+      <p class="construction-url">nyc.chartreuseexplosives.com</p>
+    </div>
+    <div class="construction-card">
+      <p class="construction-badge">// Deployment Pending</p>
+      <h3 class="construction-title">BlackSignals Full Platform</h3>
+      <p class="construction-url">blacksignals.org</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="reveal">
+  <span class="footer-logo">Chartreuse Explosives</span>
+  <span class="footer-doctrine">We never lie. Our clients must not lie.<br>Everything else is negotiable.</span>
+  <span class="footer-doctrine">&copy; 2025–2026</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
